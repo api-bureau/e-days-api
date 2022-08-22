@@ -1,7 +1,7 @@
-using Edays.Converters;
+using ApiBureau.Edays.Api.Converters;
 using System.Text.Json.Serialization;
 
-namespace Edays.Dtos;
+namespace ApiBureau.Edays.Api.Dtos;
 
 public class AbsencePublicHolidayDto : IEntityIdDto<(DateTime date, string holidayGroup)>
 {

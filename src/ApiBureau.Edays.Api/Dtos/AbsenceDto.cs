@@ -1,4 +1,4 @@
-namespace Edays.Dtos;
+namespace ApiBureau.Edays.Api.Dtos;
 
 public class AbsenceDto : IEntityIdDto<Guid>
 {

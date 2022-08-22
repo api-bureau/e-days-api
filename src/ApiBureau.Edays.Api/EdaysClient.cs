@@ -1,6 +1,4 @@
-using Edays.Core;
-
-namespace Edays;
+namespace ApiBureau.Edays.Api;
 
 public class EdaysClient
 {

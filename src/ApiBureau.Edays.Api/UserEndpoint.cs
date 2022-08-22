@@ -1,7 +1,4 @@
-using Edays.Core;
-using Edays.Dtos;
-
-namespace Edays;
+namespace ApiBureau.Edays.Api;
 
 public class UserEndpoint
 {

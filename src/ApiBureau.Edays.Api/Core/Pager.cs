@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
 
-namespace Edays.Core;
+namespace ApiBureau.Edays.Api.Core;
 
 public class Pager
 {

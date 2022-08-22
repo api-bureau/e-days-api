@@ -1,4 +1,4 @@
-namespace Edays.Core;
+namespace ApiBureau.Edays.Api.Core;
 
 public class EdaysSettings
 {

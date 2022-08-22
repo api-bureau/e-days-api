@@ -1,4 +1,4 @@
-namespace Edays.Dtos;
+namespace ApiBureau.Edays.Api.Dtos;
 
 public interface IEntityIdDto<out TKey> where TKey : IEquatable<TKey>
 {

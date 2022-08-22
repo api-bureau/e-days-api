@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Edays.Converters;
+namespace ApiBureau.Edays.Api.Converters;
 
 // This doesn't support nulls
 public class DateConverter : JsonConverter<DateTime>

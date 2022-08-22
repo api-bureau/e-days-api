@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Edays.Core;
+namespace ApiBureau.Edays.Api.Core;
 
 public class EdaysHttpFacade
 {
