@@ -1,5 +1,5 @@
-# CloudCall Api
-The purpose of this project is to help you exploring CloudCall APIs and speed up your CloudCall APIs C# and .NET Core implementation.
+# E-days Api
+The purpose of this project is to help you exploring E-days APIs and speed up your E-days APIs C# and .NET Core implementation.
 
 ## Contributors
 This project adheres following guidelines.
