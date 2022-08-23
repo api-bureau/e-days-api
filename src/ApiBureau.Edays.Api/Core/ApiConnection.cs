@@ -2,15 +2,15 @@ using System.Text.Json.Serialization;
 
 namespace ApiBureau.Edays.Api.Core;
 
-public class EdaysHttpFacade
+public class ApiConnection
 {
     private readonly HttpClient _client;
-    private readonly ILogger<EdaysHttpFacade> _logger;
+    private readonly ILogger<ApiConnection> _logger;
     private readonly EdaysSettings _settings;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
     private TokenResponse _tokenResponse = null!;
 
-    public EdaysHttpFacade(HttpClient client, IOptions<EdaysSettings> settings, ILogger<EdaysHttpFacade> logger)
+    public ApiConnection(HttpClient client, IOptions<EdaysSettings> settings, ILogger<ApiConnection> logger)
     {
         _client = client;
         _logger = logger;

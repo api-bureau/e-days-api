@@ -1,10 +1,10 @@
-namespace ApiBureau.Edays.Api;
+namespace ApiBureau.Edays.Api.Endpoints;
 
 public class RotaV1Endpoint
 {
-    private readonly EdaysHttpFacade _client;
+    private readonly ApiConnection _client;
 
-    public RotaV1Endpoint(EdaysHttpFacade client) => _client = client;
+    public RotaV1Endpoint(ApiConnection client) => _client = client;
 
     public async Task<List<AbsencePublicHolidayDto>> GetPublicHolidaysAsync(DateTime start, DateTime end)
     {

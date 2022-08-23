@@ -1,3 +1,5 @@
+using ApiBureau.Edays.Api.Endpoints;
+
 namespace ApiBureau.Edays.Api;
 
 public class EdaysClient
@@ -7,7 +9,7 @@ public class EdaysClient
     public UserEndpoint Users { get; }
     public RotaV1Endpoint RotaV1Endpoint { get; }
 
-    public EdaysClient(EdaysHttpFacade client)
+    public EdaysClient(ApiConnection client)
     {
         Absences = new AbsenceEndpoint(client);
         AbsenceTypes = new AbsenceTypeEndpoint(client);

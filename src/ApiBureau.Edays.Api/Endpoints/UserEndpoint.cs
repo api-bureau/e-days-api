@@ -1,10 +1,10 @@
-namespace ApiBureau.Edays.Api;
+namespace ApiBureau.Edays.Api.Endpoints;
 
 public class UserEndpoint
 {
-    private readonly EdaysHttpFacade _client;
+    private readonly ApiConnection _client;
 
-    public UserEndpoint(EdaysHttpFacade client) => _client = client;
+    public UserEndpoint(ApiConnection client) => _client = client;
 
     public Task<List<UserDto>> GetAsync() => _client.GetResultAsync<UserDto>("users");
 

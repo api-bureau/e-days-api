@@ -1,3 +1,4 @@
+global using ApiBureau.Edays.Api;
 global using ApiBureau.Edays.Api.Core;
 global using ApiBureau.Edays.Api.Dtos;
 global using IdentityModel.Client;
