@@ -1,4 +1,4 @@
-namespace ApiBureau.Edays.Api.Core;
+namespace ApiBureau.Edays.Api.Dtos;
 
 public class ResponseDto<T>
 {

@@ -1,12 +1,10 @@
 namespace ApiBureau.Edays.Api.Endpoints;
 
-public class UserEndpoint
+public class UserEndpoint : BaseEndpoint
 {
-    private readonly ApiConnection _client;
+    public UserEndpoint(ApiConnection apiConnection) : base(apiConnection) { }
 
-    public UserEndpoint(ApiConnection client) => _client = client;
-
-    public Task<List<UserDto>> GetAsync() => _client.GetResultAsync<UserDto>("users");
+    public Task<List<UserDto>> GetAsync() => ApiConnection.GetResultAsync<UserDto>("users");
 
     public async Task<List<(Guid UserId, int TypeId)>> GetUserTypesAsync(List<(Guid UserId, string PartnerId)> users)
     {
@@ -14,7 +12,7 @@ public class UserEndpoint
 
         foreach (var user in users)
         {
-            var response = await _client.GetResponseAsync<List<PatternDto>>($"users/{user.PartnerId}/publicholidays");
+            var response = await ApiConnection.GetResponseAsync<List<PatternDto>>($"users/{user.PartnerId}/publicholidays");
 
             if (response == null) continue;
 

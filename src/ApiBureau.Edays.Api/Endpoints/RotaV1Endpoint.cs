@@ -1,14 +1,12 @@
 namespace ApiBureau.Edays.Api.Endpoints;
 
-public class RotaV1Endpoint
+public class RotaV1Endpoint : BaseEndpoint
 {
-    private readonly ApiConnection _client;
-
-    public RotaV1Endpoint(ApiConnection client) => _client = client;
+    public RotaV1Endpoint(ApiConnection apiConnection) : base(apiConnection) { }
 
     public async Task<List<AbsencePublicHolidayDto>> GetPublicHolidaysAsync(DateTime start, DateTime end)
     {
-        var result = await _client.GetResponseV1Async<PublicHolidaysWrapperDto>($"/rota/publicHolidays?start={start:yyyy-MM-dd}&end={end:yyyy-MM-dd}");
+        var result = await ApiConnection.GetResponseV1Async<PublicHolidaysWrapperDto>($"/rota/publicHolidays?start={start:yyyy-MM-dd}&end={end:yyyy-MM-dd}");
 
         return result?.PublicHolidays ?? new();
     }

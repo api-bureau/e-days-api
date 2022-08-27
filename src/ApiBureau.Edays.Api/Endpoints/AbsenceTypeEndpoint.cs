@@ -1,10 +1,9 @@
 namespace ApiBureau.Edays.Api.Endpoints;
 
-public class AbsenceTypeEndpoint
+public class AbsenceTypeEndpoint : BaseEndpoint
 {
-    private readonly ApiConnection _client;
+    public AbsenceTypeEndpoint(ApiConnection apiConnection) : base(apiConnection) { }
 
-    public AbsenceTypeEndpoint(ApiConnection client) => _client = client;
-
-    public Task<List<AbsenceTypeDto>> GetAsync() => _client.GetResultAsync<AbsenceTypeDto>("absencetypes");
+    public Task<List<AbsenceTypeDto>> GetAsync()
+        => ApiConnection.GetResultAsync<AbsenceTypeDto>("absencetypes");
 }

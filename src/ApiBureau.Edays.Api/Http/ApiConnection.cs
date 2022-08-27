@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace ApiBureau.Edays.Api.Core;
+namespace ApiBureau.Edays.Api.Http;
 
 public class ApiConnection
 {
