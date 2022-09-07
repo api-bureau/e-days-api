@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
 namespace ApiBureau.Edays.Api.Http;
@@ -101,7 +102,7 @@ public class ApiConnection
 
     public Task<HttpResponseMessage> GetAsync(string endPoint) => _client.GetAsync(BuildUri(endPoint));
 
-    public Task<HttpResponseMessage> GetV1Async(string endPoint) => _client.GetAsync(BuildUriV1(endPoint));
+    public Task<HttpResponseMessage> GetV1Async(string endPoint) => _client.PostAsJsonAsync(BuildUriV1(endPoint), new { uid = _settings.ApiUserNameVersion1, pak = _settings.ApiKeyVersion1 });
 
     public async Task<T?> GetResponseAsync<T>(string query) where T : class
     {
@@ -109,11 +110,14 @@ public class ApiConnection
         {
             using var response = await GetAsync(query);
 
-            if (!response.IsSuccessStatusCode) return null;
+            if (response.IsSuccessStatusCode)
+            {
+                return await DeserializeAsync<T>(response);
+            }
 
-            var responseDto = await DeserializeAsync<T>(response);
+            _logger.LogError($"Response: {response.StatusCode}");
 
-            return responseDto;
+            return null;
         }
         catch (Exception e)
         {
@@ -123,7 +127,30 @@ public class ApiConnection
         }
     }
 
-    public async Task<T?> GetResponseV1Async<T>(string query) => await DeserializeAsync<T>(await GetV1Async(query));
+    public async Task<T?> GetResponseV1Async<T>(string query) where T : class
+    {
+        try
+        {
+            using var response = await GetV1Async(query);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await DeserializeAsync<T>(response);
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            _logger.LogError($"Response: {response.StatusCode}, {response.ReasonPhrase}, {content}");
+
+            return null;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, nameof(GetResponseAsync));
+
+            return null;
+        }
+    }
 
     public async Task<T?> DeserializeAsync<T>(HttpResponseMessage response)
     {
@@ -140,5 +167,5 @@ public class ApiConnection
 
     private Uri BuildUri(string url) => new Uri($"{_settings.BaseAddress}/{url}");
 
-    private Uri BuildUriV1(string url) => new Uri($"{_settings.BaseAddressVersion1}/{url}&uid={_settings.ApiUserNameVersion1}&pak={_settings.ApiKeyVersion1}");
+    private Uri BuildUriV1(string url) => new Uri($"{_settings.BaseAddressVersion1}/{url}");
 }
