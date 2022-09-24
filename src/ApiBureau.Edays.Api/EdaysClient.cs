@@ -1,5 +1,4 @@
 using ApiBureau.Edays.Api.Endpoints;
-using ApiBureau.Edays.Api.Http;
 
 namespace ApiBureau.Edays.Api;
 
