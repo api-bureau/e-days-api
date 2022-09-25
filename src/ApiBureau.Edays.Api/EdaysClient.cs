@@ -9,11 +9,13 @@ public class EdaysClient
     public UserEndpoint Users { get; }
     public RotaV1Endpoint RotaV1Endpoint { get; }
 
-    public EdaysClient(ApiConnection client)
+    public EdaysClient(HttpClient client, IOptions<EdaysSettings> settings, ILogger<ApiConnection> logger)
     {
-        Absences = new AbsenceEndpoint(client);
-        AbsenceTypes = new AbsenceTypeEndpoint(client);
-        Users = new UserEndpoint(client);
-        RotaV1Endpoint = new RotaV1Endpoint(client);
+        var apiConnection = new ApiConnection(client, settings, logger);
+
+        Absences = new AbsenceEndpoint(apiConnection);
+        AbsenceTypes = new AbsenceTypeEndpoint(apiConnection);
+        Users = new UserEndpoint(apiConnection);
+        RotaV1Endpoint = new RotaV1Endpoint(apiConnection);
     }
 }
