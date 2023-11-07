@@ -41,7 +41,8 @@ public class ApiConnection
         {
             ClientId = _settings.ClientId,
             ClientSecret = _settings.ClientSecret,
-            RequestUri = _settings.TokenUri
+            RequestUri = _settings.TokenUri,
+            ClientCredentialStyle = ClientCredentialStyle.PostBody
         };
 
         _tokenResponse = await _client.RequestClientCredentialsTokenAsync(tokenRequest);
