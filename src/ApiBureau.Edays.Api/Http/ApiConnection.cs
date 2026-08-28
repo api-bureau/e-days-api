@@ -9,7 +9,7 @@ public class ApiConnection
     private readonly ILogger<ApiConnection> _logger;
     private readonly EdaysSettings _settings;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
-    private TokenResponse _tokenResponse = null!;
+    private TokenResponse? _tokenResponse;
 
     public ApiConnection(HttpClient client, IOptions<EdaysSettings> settings, ILogger<ApiConnection> logger)
     {
@@ -39,21 +39,25 @@ public class ApiConnection
 
         var tokenRequest = new ClientCredentialsTokenRequest
         {
+            Address = _settings.TokenUri.ToString(),
             ClientId = _settings.ClientId,
-            ClientSecret = _settings.ClientSecret,
-            RequestUri = _settings.TokenUri,
-            ClientCredentialStyle = ClientCredentialStyle.PostBody
+            ClientSecret = _settings.ClientSecret
         };
 
-        _tokenResponse = await _client.RequestClientCredentialsTokenAsync(tokenRequest);
+        var tokenResponse = await _client.RequestClientCredentialsTokenAsync(tokenRequest);
 
-        if (_tokenResponse.IsError)
+        if (tokenResponse.IsError)
         {
-            _logger.LogError(_tokenResponse.ErrorDescription, _tokenResponse.Exception);
-            throw new InvalidOperationException(_tokenResponse.ErrorDescription, _tokenResponse.Exception);
+            var error = tokenResponse.Error ?? tokenResponse.HttpErrorReason;
+            _logger.LogError("Unable to retrieve an access token: {Error}", error);
+            throw new InvalidOperationException($"Unable to retrieve an access token: {error}");
         }
 
-        _client.SetBearerToken(_tokenResponse.AccessToken);
+        var accessToken = tokenResponse.AccessToken
+            ?? throw new InvalidOperationException("The token response did not contain an access token.");
+
+        _tokenResponse = tokenResponse;
+        _client.SetBearerToken(accessToken);
     }
 
     public async Task<List<T>> GetResultAsync<T>(string endpoint, int pageSize = 0)
